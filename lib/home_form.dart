@@ -11,11 +11,13 @@ class HomeForm extends StatefulWidget {
 
 class _HomeFormState extends State<HomeForm>
     with SingleTickerProviderStateMixin {
+  // Animation Controller
   AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
+
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
   }
@@ -27,9 +29,14 @@ class _HomeFormState extends State<HomeForm>
   }
 
   @override
-  Widget build(BuildContext context) {
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
-    final rightSlide = MediaQuery.of(context).size.width * 0.5;
+  @override
+  Widget build(BuildContext context) {
+    final rightSlide = MediaQuery.of(context).size.width * 0.6;
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context,child){
@@ -45,7 +52,7 @@ class _HomeFormState extends State<HomeForm>
               transform: Matrix4.identity()
                 ..translate(slide)
                 ..scale(scale),
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: Scaffold(
                 backgroundColor:Colors.white,
                 appBar: PreferredSize(
@@ -70,10 +77,10 @@ class _HomeFormState extends State<HomeForm>
                             child: Text('Welcome',style: Theme.of(context).textTheme.headline4,),
                           ),
                           const Text('Improve your language skill\nby selecting one of the following languages',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontStyle: FontStyle.italic
-                          ),)
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontStyle: FontStyle.italic
+                            ),)
                         ],
                       ),
                     ),
